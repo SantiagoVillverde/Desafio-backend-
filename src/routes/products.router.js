@@ -2,11 +2,13 @@ import { Router } from "express";
 import { io } from "../utils/socket.js";
 import { productList } from "../utils/instances.js";
 import productController from "../controllers/product.controller.js";
-
+import ErrorCodes from "../utils/error.js";
+import CustomErrors from "../utils/customError.js";
+import { generateErrorProduct } from "../utils/info.js";
 
 const productRouter = Router();
 
-productRouter.get('/', async (req, res) => {
+productRouter.get('/', async (req, res, next) => {
   try {
     const { limit = 10, page = 1, sort, descripcion, availability } = req.query;
     const products = await productController.getProducts(
@@ -21,7 +23,6 @@ productRouter.get('/', async (req, res) => {
 
     const prevPage = products.prevPage;
     const nextPage = products.nextPage;
-
 
     const prevLink =
       prevPage &&
@@ -47,64 +48,64 @@ productRouter.get('/', async (req, res) => {
       prevLink: prevLink,
       nextLink: nextLink,
     });
-  } catch (error) {
-    res.status(400).json({
-      status: "error",
-      payload: [],
-      totalPages: 0,
-      page: 1,
-      prevPage: null,
-      nextPage: null,
-      hasPrevPage: false,
-      hasNextPage: false,
-      prevLink: null,
-      nextLink: null,
-    });
+  } catch (err) {
+    next(err)
+    res.status(400).send(err)
   }
 });
 
 
-productRouter.get('/:uid' , async (req, res) => {
-
+productRouter.get('/:uid', async (req, res, next) => {
   try {
     let uid = req.params.uid
     const filterId = await productController.getProductsById(uid)
     res.status(200).send(filterId)
-  } catch (error) {
-    res.status(400).send(`Problemas 400 ${error}`)
+  } catch (err) {
+    next(err)
+    req.logger.error(`No se encontro el producto ${uid} en la base de dato`)
+    res.status(400).send(err)
   }
-
 });
 
 
-productRouter.post('/' , async (req, res) => {
+productRouter.post('/', async (req, res, next) => {
   try {
     let product = req.body;
     let productos = await productController.addProducts(product);
     res.status(201).send(productos);
   } catch (err) {
-    res.status(400).send({ err });
+    next(err)
+    req.logger.error(`No se pudo agregar el producto ${product} a la base de dato`)
+    res.status(500).send(err)
   }
 });
 
 
-productRouter.put('/:uid',  async (req, res) => {
+
+
+productRouter.put('/:uid', async (req, res, next) => {
   const uid = req.params.uid;
   try {
     const productActualizado = await productController.updateProduct(uid, req.body)
     res.status(201).send(productActualizado)
-  } catch (error) {
-    res.status(500).send("Error al tratar de actualizar", error)
+  } catch (err) {
+    next(err)
+    req.logger.error(`No se pudo actualizar el producto ${uid} de la base de dato`)
+    res.status(400).send(err)
   }
 })
 
-productRouter.delete('/:id' , async (req, res) => {
+productRouter.delete('/:id', async (req, res, next) => {
   const id = req.params.id
   try {
     await productController.deleteProduct(id)
+    req.logger.info(`se logro eliminar el pid ${id} del base de dato`)
+
     res.sendStatus(204)
-  } catch (error) {
-    res.status(500).send("No se elimino el producto")
+  } catch (err) {
+    next(err)
+    req.logger.error(`No se elimino el producto ${id} de la base de dato`)
+    res.status(500).send(err)
   }
 })
 

@@ -2,7 +2,7 @@ export const generateUserErrorInfo = () => {
 
     return `
     Error con el usuario al ingresar sus datos
-`
+   `
 }
 
 
@@ -10,7 +10,7 @@ export const generateErrorEnrutamiento = () => {
 
     return `
     Error de enrutamiento
-`
+   `
 }
 
 
@@ -21,23 +21,34 @@ export const generateErrorDeslogueo = () => {
 
 }
 
-export const generateErrorTokenNoFound = () => {
+export const generateErrorProduct = (err) => {
 
     return `
-    El token a caducado
-`
+    ${{ err }}
+   
+   `
 }
+
+export const generateErrorCart = (err) => {
+
+    return `
+    ${{ err }}
+   
+   `
+}
+
+
 
 export const generateErrorAutenticacion = () => {
     return `
-Email ya registrado / datos faltante para el registro
+   Email ya registrado / datos faltante para el registro
     `
 
 }
 
 export const generateAdminNoAuthorization = () => {
     return `
-El administrador no esta autorizado a realizar estas acciones 
+   El administrador no esta autorizado a realizar estas acciones 
     `
 
 }

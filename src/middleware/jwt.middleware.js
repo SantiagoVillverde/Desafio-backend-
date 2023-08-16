@@ -1,9 +1,6 @@
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import enviroment from '../config/enviroment.js';
-import CustomErrors from '../utils/customError.js';
-import ErrorCodes from '../utils/error.js';
-import { generateErrorTokenNoFound } from '../utils/info.js';
 
 
 const privatekey = enviroment.KEYJWT;
@@ -14,14 +11,12 @@ const generateToken = (user) => {
 
 const authToken = (req, res, next) => {
 	const authHeader = req.headers.authorization;
-	console.log(authHeader)
-	if (!authHeader) {
 
+	if (!authHeader) {
 		res.status(401).send({ message: 'Token not found' });
 	}
 
 	jwt.verify(authHeader, privatekey, (err, credentials) => {
-		console.log(authHeader, privatekey)
 		if (err) {
 			res.status(401).send({ message: 'Token not valid' });
 		}
@@ -33,12 +28,14 @@ const authToken = (req, res, next) => {
 
 const middlewarePassportJwt = async (req, res, next) => {
 	passport.authenticate('jwt', { session: false }, (err, usr, info) => {
+
+
 		if (err) {
 			next(err);
 		}
 
 		if (!usr) {
-			console.log("token jwt expired")
+			//console.log("token jwt expired")  aqui creo otro 
 			res.redirect('/errorcaduco')
 		} else {
 			req.user = usr

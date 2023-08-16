@@ -1,4 +1,3 @@
-
 import mongoose from 'mongoose';
 import express from 'express';
 import { server, app } from './utils/socket.js';
@@ -16,12 +15,14 @@ import { ticketRouter } from './routes/ticket.router.js';
 import inicializePassport from './config/passport.config.js';
 import enviroment from './config/enviroment.js';
 import errorsManagerMiddleware from './middleware/errorsManager.middleware.js';
+import { loggerMiddleware } from './middleware/logger.middleware.js';
 
 import { io } from './utils/socket.js';
 
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
+app.use(loggerMiddleware)
 
 
 app.engine('handlebars', handlerbars.engine());
