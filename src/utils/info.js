@@ -2,7 +2,7 @@ export const generateUserErrorInfo = () => {
 
     return `
     Error con el usuario al ingresar sus datos
-   `
+`
 }
 
 
@@ -10,7 +10,7 @@ export const generateErrorEnrutamiento = () => {
 
     return `
     Error de enrutamiento
-   `
+`
 }
 
 
@@ -24,31 +24,35 @@ export const generateErrorDeslogueo = () => {
 export const generateErrorProduct = (err) => {
 
     return `
-    ${{ err }}
-   
-   `
+    ${{ err }}`
+}
+
+
+export const generateErrorTicket = (err) => {
+    return `
+    ${{err}}
+    `
+
 }
 
 export const generateErrorCart = (err) => {
 
     return `
-    ${{ err }}
-   
-   `
+    ${{ err }}`
 }
 
 
 
 export const generateErrorAutenticacion = () => {
     return `
-   Email ya registrado / datos faltante para el registro
+Email ya registrado / datos faltante para el registro
     `
 
 }
 
-export const generateAdminNoAuthorization = () => {
+export const generateAdminNoAuthorization = (info) => {
     return `
-   El administrador no esta autorizado a realizar estas acciones 
+El ${{ info }} no esta autorizado a realizar estas acciones 
     `
 
 }

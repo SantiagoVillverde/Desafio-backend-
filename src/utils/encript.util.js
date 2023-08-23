@@ -8,3 +8,4 @@ export const comparePassword = (user, pass) => {
     return bcrypt.compareSync(pass, user.password)
 }
 
+
