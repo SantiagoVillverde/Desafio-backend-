@@ -48,7 +48,7 @@ const inicializePassport = () => {
                         img,
                     });
 
-                    if (userdto.email === "mitchel2206@gmail.com") {
+                    if (userdto.email === "admin@gmail.com") {
                         userdto.rol = "ADMIN";
                     }
 
