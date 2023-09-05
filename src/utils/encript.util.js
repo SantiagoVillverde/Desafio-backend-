@@ -9,3 +9,4 @@ export const comparePassword = (user, pass) => {
 }
 
 
+// utilizamos los bcrypt para hast y comparar las contraseñas //
