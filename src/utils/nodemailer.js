@@ -5,7 +5,7 @@ export const transporter = nodmailer.createTransport({
     service: 'gmail',
     port: 465,
     auth: {
-        user: 'mitchel2206@gmail.com',
+        user: 'usuario@gmail.com',
         pass: 'kjvzuthxqbpdmxny',
     },
 })
