@@ -24,7 +24,7 @@ class CartController {
                 const productStock = product[0]
                 if (productStock.stock === 0) {
 
-                    // creo un logger no hay productos
+                    
                 } else {
                     return this.service.addProductCart(cid, pid);
                 }
@@ -52,7 +52,7 @@ class CartController {
 
     async updateQuantityProduct(cid, pid, qty) {
         return this.service.updateQuantityProduct(cid, pid, qty)
-      // falta este para documentar
+    
     } 
 
     async clearProductToCart(cid) {

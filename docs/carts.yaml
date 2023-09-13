@@ -9,7 +9,7 @@ paths:
           description: carrito creado
           content:
             application/json:
-            schema: 
+             schema: 
                 $ref: '#/components/schemas/carts'
         404:
           description: No se logró crear el carrito

@@ -11,7 +11,7 @@ class ProductController {
         return this.service.addProducts(product)
     }
 
-   async getProducts(limit, page, sort, descripcion, availability) {
+async getProducts(limit, page, sort, descripcion, availability) {
         const resulta = await this.service.getProducts(limit, page, sort, descripcion, availability)
         return resulta;
     }

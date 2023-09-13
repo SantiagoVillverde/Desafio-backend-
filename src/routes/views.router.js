@@ -93,7 +93,7 @@ wiewsRouter.get('/index', middlewarePassportJwt, async (req, res) => {
   const autorizacion = user.rol === "PREMIUM" || user.rol === "ADMIN";
 
   try {
-    // const products = generateProducts(page, limit, sort, descripcion, availability)
+  
 
     const result = await productController.getProducts(limit, page, sort, descripcion, availability);
     const pag = result.pag;
